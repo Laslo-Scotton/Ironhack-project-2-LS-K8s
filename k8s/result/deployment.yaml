@@ -1,0 +1,32 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: laslo-deployment-result
+  namespace: laslo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: result
+  template:
+    metadata:
+      labels:
+        app: result
+    spec:
+      containers:
+        - name: result
+          image: scolas3/result:latest
+          env:
+            - name: PG_HOST
+              value: laslo-svc-postgres
+            - name: PG_PORT
+              value: 5432
+            - name: PG_USER
+              value: postgres
+            - name: PG_PASSWORD
+              value: postgres
+            - name: PG_DATABASE
+              value: postgres
+          ports:
+            - containerPort: 80

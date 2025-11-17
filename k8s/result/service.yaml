@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: laslo-svc-result
+  namespace: laslo
+spec:
+  type: ClusterIP
+  selector:
+    app: result
+  ports:
+    - port: 80
+      targetPort: 80
