@@ -72,8 +72,28 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
+      - name: Request OIDC token
+        id: idtoken
+        uses: actions/oidc-token@v1
+        with:
+          audience: sts.amazonaws.com
+      
+      - name: Decode SUB claim from OIDC token
+        run: |
+          python3 - <<'EOF'
+          import jwt, os
+          token = os.environ["ACTIONS_ID_TOKEN"]
+          decoded = jwt.decode(token, options={"verify_signature": False})
+          print(decoded["sub"])
+          EOF
+        env:
+          ACTIONS_ID_TOKEN: ${{ steps.idtoken.outputs.id_token }}
       - name: Print GitHub OIDC sub
-        run: echo "SUB CLAIM repo:${{ github.repository }}:*"
+        id: jwt
+        run: |
+          TOKEN=$(curl -H "Authorization: Bearer $ACTIONS_ID_TOKEN" https://api.github.com)
+          echo "Token: $TOKEN"
 
       - name: Configure AWS credentials (OIDC) # assumes a pre set up role
         uses: aws-actions/configure-aws-credentials@v4
