@@ -21,6 +21,10 @@ jobs:
     steps:
       - name: DEBUG ARN
         run: echo ${{ secrets.AWS_ROLE_TO_BE_ASSUMED_CICD }}
+      - name: Print GitHub OIDC sub
+        shell: bash
+        run: echo "SUB CLAIM: repo:${{ github.repository }}:*"
+        
       - uses: actions/checkout@v3
 
       - name: Detect changes for each service
