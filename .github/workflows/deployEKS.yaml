@@ -19,6 +19,8 @@ jobs:
       result: ${{ steps.filter.outputs.result }}
 
     steps:
+      - name: DEBUG ARN
+        run: echo ${{ secrets.AWS_ROLE_TO_BE_ASSUMED_CICD }}
       - uses: actions/checkout@v3
 
       - name: Detect changes for each service
@@ -76,6 +78,7 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_BE_ASSUMED_CICD }}
           aws-region: ${{ vars.AWS_EKS_REGION }}
+          audience: sts.amazonaws.com
 
       - name: Update kubeconfig
         run: |
