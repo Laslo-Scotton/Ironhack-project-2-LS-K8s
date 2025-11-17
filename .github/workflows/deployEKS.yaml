@@ -85,7 +85,6 @@ jobs:
           aws eks update-kubeconfig \
             --name ${{ vars.AWS_EKS_NAME }} \
             --region ${{ vars.AWS_EKS_REGION }} \
-            --role-arn arn:aws:iam::686699774218:role/GitHubActionsEKSRoleLS
       - name: Test kubectl access
         run: kubectl get nodes -n laslo
 
