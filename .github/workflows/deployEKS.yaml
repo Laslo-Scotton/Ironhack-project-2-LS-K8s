@@ -95,7 +95,7 @@ jobs:
           kubectl set image deployment/laslo-deployment-vote \
             vote=scolas3/vote:${GITHUB_SHA} \
             -n laslo
-          kubectl rollout status deployment/vote-deployment -n laslo
+          kubectl rollout status deployment/laslo-deployment-vote -n laslo
 
       - name: Update worker deployment
         if: needs.detect-changes.outputs.worker == 'true'
@@ -103,7 +103,7 @@ jobs:
           kubectl set image deployment/laslo-deployment-worker \
             worker=scolas3/worker:${GITHUB_SHA} \
             -n laslo
-          kubectl rollout status deployment/worker-deployment -n laslo
+          kubectl rollout status deployment/laslo-deployment-worker -n laslo
 
       - name: Update result deployment
         if: needs.detect-changes.outputs.result == 'true'
@@ -111,4 +111,4 @@ jobs:
           kubectl set image deployment/laslo-deployment-result \
             result=scolas3/result:${GITHUB_SHA} \
             -n laslo
-          kubectl rollout status deployment/result-deployment -n laslo
+          kubectl rollout status deployment/laslo-deployment-result -n laslo
