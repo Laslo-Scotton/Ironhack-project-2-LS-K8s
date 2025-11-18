@@ -19,6 +19,9 @@ spec:
           image: scolas3/vote:latest
           env:
             - name: REDIS_HOST
-              value: laslo-svc-redis
+              valueFrom:
+                secretKeyRef:
+                  name: laslo-vote-sec
+                  key: REDIS_HOST
           ports:
             - containerPort: 80

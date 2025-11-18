@@ -19,14 +19,29 @@ spec:
           image: scolas3/result:latest
           env:
             - name: PG_HOST
-              value: laslo-svc-postgres
+              valueFrom:
+                secretKeyRef:
+                  name: laslo-result-sec
+                  key: PG_HOST
             - name: PG_PORT
-              value: "5432"
+              valueFrom:
+                secretKeyRef:
+                  name: laslo-result-sec
+                  key: PG_PORT
             - name: PG_USER
-              value: postgres
+              valueFrom: 
+                secretKeyRef:
+                  name: laslo-result-sec
+                  key: PG_USER
             - name: PG_PASSWORD
-              value: postgres
+              valueFrom:
+                secretKeyRef:
+                  name: laslo-result-sec
+                  key: PG_PASSWORD
             - name: PG_DATABASE
-              value: postgres
+              valueFrom:
+                secretKeyRef:
+                  name: laslo-result-sec
+                  key: PG_DATABASE
           ports:
             - containerPort: 80

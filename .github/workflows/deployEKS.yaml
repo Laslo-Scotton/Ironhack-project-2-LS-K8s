@@ -19,9 +19,6 @@ jobs:
       result: ${{ steps.filter.outputs.result }}
 
     steps:
-      - name: DEBUG ARN
-        run: echo ${{ secrets.AWS_ROLE_TO_BE_ASSUMED_CICD }}
-      - uses: actions/checkout@v3
 
       - name: Detect changes for each service
         id: filter
@@ -76,7 +73,7 @@ jobs:
       - name: Configure AWS credentials (OIDC) # assumes a pre set up role
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::686699774218:role/GitHubActionsEKSRoleLS # ${{ secrets.AWS_ROLE_TO_BE_ASSUMED_CICD }}
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_BE_ASSUMED_CICD }} # arn:aws:iam::686699774218:role/GitHubActionsEKSRoleLS 
           aws-region: ${{ vars.AWS_EKS_REGION }}
           audience: sts.amazonaws.com
 
